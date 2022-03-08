@@ -11,7 +11,9 @@ namespace Players {
         private PlayerAnimationManager _animationManager;
         [SerializeField] private Transform hitPoint;
         [SerializeField] private LayerMask interactablesLayer;
-        
+
+        [Space]
+
         // Bool Flags
         private bool isIdle = true;
         private bool isRunning = false;
@@ -23,10 +25,16 @@ namespace Players {
         private bool isHitting = false;
 
         private bool hitCoolDownTimer = false;
-        
+
+        // Upgrades
+        [SerializeField] private bool hasIncreasedJump = false;
+
+        [Space]
+
         // Variables
         [SerializeField] private float moveSpeed = 3f;
         [SerializeField] private float jumpForce = 400f;
+        [SerializeField] private float increasedJumpForce = 600f;
         [SerializeField] private float dashAmount = 4f;
         [SerializeField] private float hitRange = 3f;
         private float _directionX;
@@ -64,7 +72,9 @@ namespace Players {
                     if (!isJumping) {
                         isJumping = true;
                         _animationManager.ChangeAnimationState(State.PlayerJumping);
-                        Jump();
+
+                        if (hasIncreasedJump) Jump(increasedJumpForce);
+                        else Jump();
                     }
                 }
 
@@ -99,6 +109,10 @@ namespace Players {
 
                 if (obj.GetComponent<Switch>()) {
                     obj.GetComponent<Switch>().FlipSwitch();
+                }
+
+                if (obj.GetComponent<Ball>()) {
+                    obj.GetComponent<Ball>().Move(IsFacingRight);
                 }
             }
         }

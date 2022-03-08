@@ -21,6 +21,7 @@ namespace Players {
         protected float MoveSpeed;
         protected float JumpForce;
 
+        protected int CurrentDirection;
         protected const int Left = -1;
         protected const int Right = 1;
         protected const int Idle = 0;
@@ -38,19 +39,23 @@ namespace Players {
         private void Update() { }
 
         protected void Move(float move) {
-            var direction = Idle;
+            CurrentDirection = Idle;
             
-            if (move > 0) direction = Right;
-            else if (move < 0) direction = Left;
+            if (move > 0) CurrentDirection = Right;
+            else if (move < 0) CurrentDirection = Left;
 
-            Flip(direction);
+            Flip(CurrentDirection);
 
             var xValue = move * 100 * Time.deltaTime * MoveSpeed;
             Rb.velocity = new Vector2(xValue, Rb.velocity.y);
         }
 
         protected void Jump() {
-            Rb.AddForce(new Vector2(0f, JumpForce));
+            Jump(JumpForce);
+        }
+
+        protected void Jump(float jumpForce) {
+            Rb.AddForce(new Vector2(0f, jumpForce));
             IsGrounded = false;
         }
 

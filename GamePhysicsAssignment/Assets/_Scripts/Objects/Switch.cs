@@ -25,13 +25,14 @@ namespace Objects {
         private void Update() { }
 
         public void FlipSwitch() {
-            print("Black");
+            if (isFlipped) return;
+
+            isFlipped = true;
             if (_player.GetIsFacingRight())
                 _spriteRenderer.sprite = switchFlippedRight;
             else
                 _spriteRenderer.sprite = switchFlippedLeft;
 
-            isFlipped = true;
         }
     }
 }
