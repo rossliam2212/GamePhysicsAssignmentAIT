@@ -20,6 +20,14 @@ namespace Players {
                 _player.IsJumping = false;
                 _player.SetIsGrounded(true);
             }
+
+            if (other.gameObject.CompareTag("Boulder")) {
+                _player.TakeDamage(100);
+            }
+            
+            Physics2D.IgnoreLayerCollision(9, 10, true);
         }
+
+        private void OnTriggerEnter2D(Collider2D other) { }
     }
 }

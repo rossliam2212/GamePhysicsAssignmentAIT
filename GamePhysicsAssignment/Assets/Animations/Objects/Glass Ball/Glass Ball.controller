@@ -1,58 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1102 &-6664006723048316538
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: player_flatten
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 47b0e8bea917bca48a1f222fc6db876b, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &-5357688077133387478
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: player_hit
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: a7c8cbce034f54d43b05cf35f2436182, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1107 &-3128712191559487513
+--- !u!1107 &-3025481382429406492
 AnimatorStateMachine:
   serializedVersion: 6
   m_ObjectHideFlags: 1
@@ -62,43 +10,34 @@ AnimatorStateMachine:
   m_Name: Base Layer
   m_ChildStates:
   - serializedVersion: 1
-    m_State: {fileID: 539685248826655302}
-    m_Position: {x: 190, y: 50, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 2509128070014836208}
-    m_Position: {x: 200, y: 100, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -5357688077133387478}
-    m_Position: {x: 200, y: 150, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 7247126628978006536}
-    m_Position: {x: 200, y: 0, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -6664006723048316538}
+    m_State: {fileID: 3911184809900449712}
     m_Position: {x: 235, y: 65, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 6125349579477498162}
+    m_Position: {x: 240, y: 110, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: -10, y: 10, z: 0}
-  m_EntryPosition: {x: 220, y: -40, z: 0}
-  m_ExitPosition: {x: -10, y: 50, z: 0}
+  m_AnyStatePosition: {x: 20, y: 70, z: 0}
+  m_EntryPosition: {x: 260, y: 20, z: 0}
+  m_ExitPosition: {x: 20, y: 110, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: 7247126628978006536}
+  m_DefaultState: {fileID: 3911184809900449712}
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Player
+  m_Name: Glass Ball
   serializedVersion: 5
   m_AnimatorParameters: []
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
-    m_StateMachine: {fileID: -3128712191559487513}
+    m_StateMachine: {fileID: -3025481382429406492}
     m_Mask: {fileID: 0}
     m_Motions: []
     m_Behaviours: []
@@ -108,14 +47,14 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
---- !u!1102 &539685248826655302
+--- !u!1102 &1119125685308518012
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: player_run
+  m_Name: glassBallEmpty
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -128,20 +67,20 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 806bcb76a513cd745a01fd45a6caca3f, type: 2}
+  m_Motion: {fileID: 7400000, guid: c2643bd965b065947b5ff399f28d269d, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &2509128070014836208
+--- !u!1102 &3911184809900449712
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: player_jump
+  m_Name: glassBallEmpty
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -154,20 +93,20 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: fd2cb76178a5a6545bd648085944b419, type: 2}
+  m_Motion: {fileID: 7400000, guid: 33189de524c8dd74d82d78ba09f81fcb, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &7247126628978006536
+--- !u!1102 &6125349579477498162
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: player_idle
+  m_Name: glassBallFill
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -180,7 +119,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: f4c1278df77116c4daa060194cd01a0d, type: 2}
+  m_Motion: {fileID: 7400000, guid: ed27048c1c32f2c41ba31415b953c5f7, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

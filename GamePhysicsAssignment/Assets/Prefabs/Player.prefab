@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3002501830861113970}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HitPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 6729923067972577367}
   - component: {fileID: 6729923067972577369}
   - component: {fileID: 6729923067972577374}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -203,8 +203,11 @@ MonoBehaviour:
   interactablesLayer:
     serializedVersion: 2
     m_Bits: 128
+  ball: {fileID: 5346881279014758233, guid: 06436b714d898ef45a37dd4c599a3b07, type: 3}
+  hasIncreasedJump: 0
   moveSpeed: 3
   jumpForce: 400
+  increasedJumpForce: 600
   dashAmount: 4
   hitRange: 3
 --- !u!114 &6729923067972577369

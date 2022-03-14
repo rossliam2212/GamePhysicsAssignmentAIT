@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using Objects;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Players {
@@ -11,6 +11,9 @@ namespace Players {
         private PlayerAnimationManager _animationManager;
         [SerializeField] private Transform hitPoint;
         [SerializeField] private LayerMask interactablesLayer;
+        
+        [SerializeField] private GameObject ball;
+        private GameObject _currentBall;
 
         [Space]
 
@@ -18,6 +21,8 @@ namespace Players {
         private bool isIdle = true;
         private bool isRunning = false;
         
+        private bool isFlattened = false;
+
         private bool isJumpPressed = false;
         private bool isJumping = false;
         
@@ -25,6 +30,10 @@ namespace Players {
         private bool isHitting = false;
 
         private bool hitCoolDownTimer = false;
+
+        private bool canSpawnBall = false;
+        private bool spawnBallPressed = false;
+        private bool destrouBallPressed = false;
 
         // Upgrades
         [SerializeField] private bool hasIncreasedJump = false;
@@ -40,11 +49,15 @@ namespace Players {
         private float _directionX;
         private float hitCoolDown = 0.5f;
 
+        private Vector3 _respawnPoint;
+
         private new void Start() {
             base.Start();
             _animationManager = GetComponent<PlayerAnimationManager>();
             MoveSpeed = moveSpeed;
             JumpForce = jumpForce;
+
+            _respawnPoint = transform.position;
         }
 
         private void Update() {
@@ -61,6 +74,8 @@ namespace Players {
         }
 
         private void FixedUpdate() {
+            canSpawnBall = _currentBall == null;
+            
             if (!isDead) {
                 Move(_directionX);
                 
@@ -87,6 +102,23 @@ namespace Players {
                         hitCoolDownTimer = true;
                     }
                 }
+
+                if (spawnBallPressed && canSpawnBall && !isJumping) {
+                    spawnBallPressed = false;
+                    var t = transform.position;
+                    var spawnPosition = new Vector3(IsFacingRight ? t.x + 1 : t.x - 1, t.y, t.z);
+
+                    _currentBall = Instantiate(ball, spawnPosition, quaternion.identity);
+                }
+
+                if (destrouBallPressed) {
+                    destrouBallPressed = false;
+                    if (_currentBall == null) return;
+                    Destroy(_currentBall);
+                }
+            }
+            else {
+                _animationManager.ChangeAnimationState(State.PlayerFlatten);
             }
         }
 
@@ -98,6 +130,12 @@ namespace Players {
 
             if (Input.GetMouseButton(0))
                 isHitPressed = true;
+
+            if (Input.GetKeyDown(KeyCode.Q))
+                spawnBallPressed = true;
+
+            if (Input.GetKeyDown(KeyCode.E))
+                destrouBallPressed = true;
         }
 
         private void CheckHit() {
@@ -115,6 +153,24 @@ namespace Players {
                     obj.GetComponent<Ball>().Move(IsFacingRight);
                 }
             }
+        }
+
+        public override void TakeDamage(int damage) {
+            currentHealth -= damage;
+            if (currentHealth <= damage) {
+                isDead = true;
+                Invoke(nameof(ResetPlayer), 1f);
+            }
+        }
+
+        private void ResetPlayer() {
+            transform.position = _respawnPoint;
+            isDead = false;
+            isIdle = true;
+            isRunning = false;
+            isJumping = false;
+            isHitting = false;
+            hasIncreasedJump = false;
         }
         
         private void OnDrawGizmosSelected() {

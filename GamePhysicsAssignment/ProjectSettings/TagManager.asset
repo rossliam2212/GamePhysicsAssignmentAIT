@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Ball
   - Slant
+  - Boulder
+  - SlantCollider
+  - OutOfBounds
   layers:
   - Default
   - TransparentFX
@@ -15,9 +18,9 @@ TagManager:
   - UI
   - Ground
   - Interactables
-  - 
-  - 
-  - 
+  - Boulder
+  - Objects
+  - Player
   - 
   - 
   - 
@@ -40,6 +43,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 1454359387
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

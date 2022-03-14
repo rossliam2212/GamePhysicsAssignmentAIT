@@ -16,7 +16,7 @@ namespace Players {
         
         // Variables
         private const int MaxHealth = 100;
-        [SerializeField] private int currentHealth;
+        [SerializeField] protected int currentHealth;
 
         protected float MoveSpeed;
         protected float JumpForce;
@@ -66,7 +66,7 @@ namespace Players {
             }
         }
 
-        protected void TakeDamage(int damage) {
+        public virtual void TakeDamage(int damage) {
             currentHealth -= damage;
             if (currentHealth <= 0)
                 Kill();
@@ -74,7 +74,7 @@ namespace Players {
 
         private void Kill() {
             isDead = true;
-            Invoke(nameof(DestroyObject), 0f);
+            Invoke(nameof(DestroyObject), 0.5f);
         }
 
         private void DestroyObject() {

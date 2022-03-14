@@ -7,7 +7,8 @@ namespace Players {
         PlayerIdle,
         PlayerRunning,
         PlayerJumping,
-        PlayerHitting
+        PlayerHitting,
+        PlayerFlatten
     }
     
     public class PlayerAnimationManager : MonoBehaviour {
@@ -20,6 +21,7 @@ namespace Players {
         private const string PlayerRun = "player_run";
         private const string PlayerJump = "player_jump";
         private const string PlayerHit = "player_hit";
+        private const string PlayerFlatten = "player_flatten";
 
         private void Start() {
             _player = GetComponent<Player>();
@@ -32,6 +34,7 @@ namespace Players {
             if (currentState == newState) return;
 
             switch (newState) {
+                default:
                 case State.PlayerIdle:
                     _animator.Play(PlayerIdle);
                     break;
@@ -43,6 +46,9 @@ namespace Players {
                     break;
                 case State.PlayerHitting:
                     _animator.Play(PlayerHit);
+                    break;
+                case State.PlayerFlatten:
+                    _animator.Play(PlayerFlatten);
                     break;
             }
 

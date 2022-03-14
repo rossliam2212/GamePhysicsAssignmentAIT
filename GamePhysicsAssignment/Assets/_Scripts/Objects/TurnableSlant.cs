@@ -6,18 +6,18 @@ namespace Objects {
     public class TurnableSlant : MonoBehaviour {
 
         private SpriteRenderer _spriteRenderer;
-        private Sprite whiteSlantSprite;
+        private Sprite _whiteSlantSprite;
         [SerializeField] private Sprite redSlantSprite;
 
-        private int currentDirection = 1;
-        private const int Up = 1;
-        private const int Right = 2;
-        private const int Down = 3;
-        private const int Left = 4;
+        // Up - 1
+        // Right - 2
+        // Down - 3
+        // Left - 4
+        private int _currentDirection = 1;
 
         private void Start() {
             _spriteRenderer = GetComponent<SpriteRenderer>();
-            whiteSlantSprite = _spriteRenderer.sprite;
+            _whiteSlantSprite = _spriteRenderer.sprite;
         }
 
         private void Update() { }
@@ -30,17 +30,17 @@ namespace Objects {
 
         private void Rotate() {
             transform.Rotate(0f, 0f, -90);
-            currentDirection++;
-
-            if (currentDirection > 4) currentDirection = 1;
+            
+            if (_currentDirection >= 4) _currentDirection = 1;
+            else _currentDirection++;
         }
 
         private void ResetSprite() {
-            _spriteRenderer.sprite = whiteSlantSprite;
+            _spriteRenderer.sprite = _whiteSlantSprite;
         }
 
-        public float GetDirection() {
-            return currentDirection;
+        public int GetDirection() {
+            return _currentDirection;
         }
     }
 }
