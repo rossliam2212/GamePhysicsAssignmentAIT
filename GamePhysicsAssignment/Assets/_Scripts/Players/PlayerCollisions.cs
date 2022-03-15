@@ -10,9 +10,7 @@ namespace Players {
         [SerializeField] private LayerMask whatIsGround;
         [SerializeField] private LayerMask enemyLayers;
 
-        private void Start() {
-            _player = GetComponent<Player>();
-        }
+        private void Start() { _player = GetComponent<Player>(); }
 
         private void OnCollisionEnter2D(Collision2D other) {
             if ((whatIsGround.value & (1 << other.transform.gameObject.layer)) > 0) {

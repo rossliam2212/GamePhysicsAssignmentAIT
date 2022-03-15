@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1905238681134147026}
   - component: {fileID: 5512601845855624488}
   - component: {fileID: 7398417191542667022}
+  - component: {fileID: -6785232450285621376}
   m_Layer: 9
   m_Name: Glass Ball
   m_TagString: Untagged
@@ -102,3 +103,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-6785232450285621376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3666459111052997472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4047bd5a875cdac4f97f76539d84624c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
