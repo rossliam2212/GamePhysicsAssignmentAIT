@@ -9,6 +9,9 @@ TagManager:
   - Boulder
   - SlantCollider
   - OutOfBounds
+  - TrapDoor
+  - Spikes
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX

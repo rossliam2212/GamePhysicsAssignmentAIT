@@ -7,27 +7,36 @@ namespace Controllers {
 
         [SerializeField] private GameObject boulder;
         [SerializeField] private Transform spawnPoint;
-        private float _spawnCoolDown = 2f;
-        private bool spawnCoolDownTimer = false;
-        private bool canSpawn = false;
+        private float _spawnCoolDown = 1f;
+        private bool _spawnCoolDownTimer = false;
 
-        private void Start() { canSpawn = true; }
+        private bool _canSpawn = false;
+        private bool _spawn = false;
+
+        private void Start() {
+            _canSpawn = true;
+            _spawn = true;
+        }
 
         private void Update() {
-            if (canSpawn) {
+            if (!_canSpawn) return;
+            
+            if (_spawn) {
                 Instantiate(boulder, spawnPoint.position, Quaternion.identity);
-                canSpawn = false;
-                spawnCoolDownTimer = true;
+                _spawn = false;
+                _spawnCoolDownTimer = true;
             }
             
-            if (spawnCoolDownTimer) {
+            if (_spawnCoolDownTimer) {
                 _spawnCoolDown -= Time.deltaTime;
                 if (_spawnCoolDown <= 0f) {
-                    spawnCoolDownTimer = false;
-                    canSpawn = true;
-                    _spawnCoolDown = 2f;
+                    _spawnCoolDownTimer = false;
+                    _spawn = true;
+                    _spawnCoolDown = 1f;
                 }
             }
         }
+        
+        public bool CanSpawn { set => _canSpawn = value; }
     }
 }

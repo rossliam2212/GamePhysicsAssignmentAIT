@@ -22,6 +22,10 @@ namespace Players {
             if (other.gameObject.CompareTag("Boulder")) {
                 _player.TakeDamage(100);
             }
+
+            if (other.gameObject.CompareTag("Spikes")) {
+                _player.TakeDamage(100);
+            }
             
             Physics2D.IgnoreLayerCollision(9, 10, true);
         }
