@@ -72,7 +72,7 @@ namespace Players {
                 Kill();
         }
 
-        private void Kill() {
+        protected void Kill() {
             isDead = true;
             Invoke(nameof(DestroyObject), 0.5f);
         }

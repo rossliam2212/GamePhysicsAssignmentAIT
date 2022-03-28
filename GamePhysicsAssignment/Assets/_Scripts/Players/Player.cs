@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Controllers;
 using Objects;
 using Unity.Mathematics;
 using UnityEngine;
@@ -9,6 +10,8 @@ namespace Players {
         
         // Components/Game Objects
         private PlayerAnimationManager _animationManager;
+        private GameUIController _gameUIController;
+        
         [SerializeField] private Transform hitPoint;
         [SerializeField] private LayerMask interactablesLayer;
         
@@ -23,17 +26,17 @@ namespace Players {
         
         private bool isFlattened = false;
 
-        private bool isJumpPressed = false;
-        private bool isJumping = false;
+        private bool _isJumpPressed = false;
+        private bool _isJumping = false;
         
-        private bool isHitPressed = false;
-        private bool isHitting = false;
+        private bool _isHitPressed = false;
+        private bool _isHitting = false;
 
-        private bool hitCoolDownTimer = false;
-
-        private bool canSpawnBall = false;
-        private bool spawnBallPressed = false;
-        private bool destrouBallPressed = false;
+        private bool _hitCoolDownTimer = false;
+        
+        private bool _canSpawnBall = false;
+        private bool _spawnBallPressed = false;
+        private bool _destroyBallPressed = false;
 
         // Upgrades
         [SerializeField] private bool hasIncreasedJump = false;
@@ -47,13 +50,17 @@ namespace Players {
         [SerializeField] private float dashAmount = 4f;
         [SerializeField] private float hitRange = 3f;
         private float _directionX;
-        private float hitCoolDown = 0.5f;
+        private float _hitCoolDown = 0.5f;
+
+        private int _lives = 3;
 
         private Vector3 _respawnPoint;
 
         private new void Start() {
             base.Start();
             _animationManager = GetComponent<PlayerAnimationManager>();
+            _gameUIController = FindObjectOfType(typeof(GameUIController)) as GameUIController;
+            
             MoveSpeed = moveSpeed;
             JumpForce = jumpForce;
 
@@ -61,31 +68,34 @@ namespace Players {
         }
 
         private void Update() {
+            if (isDead) return;
+            
             GetInput();
 
-            if (hitCoolDownTimer) {
-                hitCoolDown -= Time.deltaTime;
-                if (hitCoolDown <= 0f) {
-                    hitCoolDown = 0.5f;
-                    hitCoolDownTimer = false;
-                    isHitting = false;
+            if (_hitCoolDownTimer) {
+                _hitCoolDown -= Time.deltaTime;
+                if (_hitCoolDown <= 0f) {
+                    _hitCoolDown = 0.5f;
+                    _hitCoolDownTimer = false;
+                    _isHitting = false;
                 }
             }
         }
 
         private void FixedUpdate() {
-            canSpawnBall = _currentBall == null;
+            if (isDead || _lives <= 0) return;
             
-            if (!isDead) {
+            _canSpawnBall = _currentBall == null; 
+            if (!isFlattened) {
                 Move(_directionX);
-                
-                if (IsGrounded && !isHitting) 
+
+                if (IsGrounded && !_isHitting)
                     _animationManager.ChangeAnimationState(_directionX != 0 ? State.PlayerRunning : State.PlayerIdle);
 
-                if (isJumpPressed && IsGrounded && !isHitting) {
-                    isJumpPressed = false;
-                    if (!isJumping) {
-                        isJumping = true;
+                if (_isJumpPressed && IsGrounded && !_isHitting) {
+                    _isJumpPressed = false;
+                    if (!_isJumping) {
+                        _isJumping = true;
                         _animationManager.ChangeAnimationState(State.PlayerJumping);
 
                         if (hasIncreasedJump) Jump(increasedJumpForce);
@@ -93,30 +103,30 @@ namespace Players {
                     }
                 }
 
-                if (isHitPressed && IsGrounded && !isJumping) {
-                    isHitPressed = false;
-                    if (!isHitting) {
-                        isHitting = true;
+                if (_isHitPressed && IsGrounded && !_isJumping) {
+                    _isHitPressed = false;
+                    if (!_isHitting) {
+                        _isHitting = true;
                         _animationManager.ChangeAnimationState(State.PlayerHitting);
                         CheckHit();
-                        hitCoolDownTimer = true;
+                        _hitCoolDownTimer = true;
                     }
                 }
 
-                if (spawnBallPressed && canSpawnBall && !isJumping) {
-                    spawnBallPressed = false;
+                if (_spawnBallPressed && _canSpawnBall && !_isJumping) {
+                    _spawnBallPressed = false;
                     var t = transform.position;
                     var spawnPosition = new Vector3(IsFacingRight ? t.x + 1 : t.x - 1, t.y, t.z);
 
-                    _currentBall = Instantiate(ball, spawnPosition, quaternion.identity);
+                    _currentBall = Instantiate(ball, spawnPosition, Quaternion.identity);
                 }
 
-                if (destrouBallPressed) {
-                    destrouBallPressed = false;
+                if (_destroyBallPressed) {
+                    _destroyBallPressed = false;
                     if (_currentBall == null) return;
                     Destroy(_currentBall);
                 }
-            }
+            } 
             else {
                 _animationManager.ChangeAnimationState(State.PlayerFlatten);
             }
@@ -126,16 +136,16 @@ namespace Players {
             _directionX = Input.GetAxis("Horizontal");
 
             if (Input.GetButtonDown("Jump"))
-                isJumpPressed = true;
+                _isJumpPressed = true;
 
             if (Input.GetMouseButton(0))
-                isHitPressed = true;
+                _isHitPressed = true;
 
             if (Input.GetKeyDown(KeyCode.Q))
-                spawnBallPressed = true;
+                _spawnBallPressed = true;
 
             if (Input.GetKeyDown(KeyCode.E))
-                destrouBallPressed = true;
+                _destroyBallPressed = true;
         }
 
         private void CheckHit() {
@@ -156,20 +166,31 @@ namespace Players {
         }
 
         public override void TakeDamage(int damage) {
+            if (isFlattened || isDead || _lives <= 0) return;
+            
             currentHealth -= damage;
             if (currentHealth <= damage) {
-                isDead = true;
-                Invoke(nameof(ResetPlayer), 1f);
+                isFlattened = true;
+                _lives--;
+                if (_lives >= 1) {
+                    Invoke(nameof(ResetPlayer), 1f);
+                    print("Calling reset player");
+                }
+                else {
+                    isDead = true;
+                    Destroy(gameObject);
+                    _gameUIController.SetGameOverUI();
+                }
             }
         }
 
         private void ResetPlayer() {
             transform.position = _respawnPoint;
-            isDead = false;
+            isFlattened = false;
             isIdle = true;
             isRunning = false;
-            isJumping = false;
-            isHitting = false;
+            _isJumping = false;
+            _isHitting = false;
             hasIncreasedJump = false;
         }
         
@@ -179,8 +200,17 @@ namespace Players {
         }
         
         public bool IsJumping {
-            get => isJumping;
-            set => isJumping = value;
+            get => _isJumping;
+            set => _isJumping = value;
+        }
+
+        public int Lives {
+            get => _lives;
+            set => _lives = value;
+        }
+
+        public bool CanSpawnBall {
+            get => _canSpawnBall;
         }
     }
 }

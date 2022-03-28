@@ -21,8 +21,8 @@ namespace Enemies {
             switch (CurrentState) {
                 default:
                 case EnemyState.Idle:
-                    if (!InShootRange()) print("Idle");
-                    else CurrentState = EnemyState.Shooting;
+                    if (InShootRange()) 
+                        CurrentState = EnemyState.Shooting;
                     break;
                 case EnemyState.Shooting:
                     if (InShootRange()) {

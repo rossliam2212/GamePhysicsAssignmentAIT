@@ -51,6 +51,10 @@ namespace Objects {
                 var direction = Vector3.Reflect(_lastVelocity.normalized, other.contacts[0].normal);
                 _rb.velocity = direction * Mathf.Max(speed, 0f);
             }
+
+            if (other.gameObject.CompareTag("EnemyBullet") || other.gameObject.CompareTag("TurretEnemy")) {
+                Destroy(gameObject);
+            }
         }
 
         private void OnTriggerEnter2D(Collider2D other) {

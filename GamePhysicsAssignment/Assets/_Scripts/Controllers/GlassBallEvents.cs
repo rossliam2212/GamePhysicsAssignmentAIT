@@ -10,7 +10,8 @@ namespace Controllers {
         [SerializeField] private GameObject boulderSpawnerClose1;
 
         [SerializeField] private List<TrapDoor> trapDoorsSet1;
-        
+        [SerializeField] private List<TrapDoor> trapDoorSet2;
+
         private void Start() { }
 
         private void Update() { }
@@ -23,6 +24,12 @@ namespace Controllers {
         public void FlipTrapDoorsSet1() {
             foreach (var trapDoor in trapDoorsSet1) {
                 trapDoor.SetTrapDoorUp();
+            }
+        }
+
+        public void FlipTrapDoorSet2() {
+            foreach (var trapDoor in trapDoorSet2) {
+                trapDoor.SetTrapDoorDown();
             }
         }
     }

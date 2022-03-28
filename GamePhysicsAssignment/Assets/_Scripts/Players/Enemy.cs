@@ -39,7 +39,7 @@ namespace Players {
 
         protected void Shoot() {
             if (shootPoint == null) return;
-            Instantiate(bullet, transform.position, Quaternion.identity);
+            Instantiate(bullet, shootPoint.position, Quaternion.identity);
             CheckShoot();
         }
 
