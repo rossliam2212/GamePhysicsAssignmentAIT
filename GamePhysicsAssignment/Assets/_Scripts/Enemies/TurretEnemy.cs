@@ -11,10 +11,14 @@ namespace Enemies {
 
         private bool _isShooting = false;
         private bool _shootCoolDownTimer = false;
+
+        private const string TurretEnemyIdle = "turretEnemy_idle";
+        private const string TurretEnemyWalk = "turretEnemy_walk";
         
         private new void Start() {
-            base.Start();
             ShootRange = shootRange;
+            CurrentAnimationState = TurretEnemyIdle;
+            base.Start();
         }
 
         private void Update() {
@@ -22,9 +26,9 @@ namespace Enemies {
                 default:
                 case EnemyState.Idle:
                     if (InShootRange()) 
-                        CurrentState = EnemyState.Shooting;
+                        CurrentState = EnemyState.Shoot;
                     break;
-                case EnemyState.Shooting:
+                case EnemyState.Shoot:
                     if (InShootRange()) {
                         Flip(Player.transform.position.x > transform.position.x ? Right : Left);
                         if (!_isShooting) {

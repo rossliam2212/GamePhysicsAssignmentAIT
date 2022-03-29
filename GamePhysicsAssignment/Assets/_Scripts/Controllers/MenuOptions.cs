@@ -6,10 +6,10 @@ using UnityEngine.SceneManagement;
 namespace Controllers {
     public class MenuOptions : MonoBehaviour {
 
-        // public void Start() {
-        //     SceneManager.LoadScene("Factory");
-        //     print("Start Pressed");
-        // }
+        public void StartGame() {
+            SceneManager.LoadScene("Factory");
+            print("Start Pressed");
+        }
 
         public void Restart() {
             SceneManager.LoadScene("Factory");
