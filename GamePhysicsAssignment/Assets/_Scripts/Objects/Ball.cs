@@ -47,6 +47,7 @@ namespace Objects {
 
         private void OnCollisionEnter2D(Collision2D other) {
             if (other.gameObject.CompareTag("SlantCollider")) {
+                other.gameObject.GetComponentInParent<TurnableSlant>().Hit();
                 var speed = _lastVelocity.magnitude;
                 var direction = Vector3.Reflect(_lastVelocity.normalized, other.contacts[0].normal);
                 _rb.velocity = direction * Mathf.Max(speed, 0f);

@@ -15,7 +15,7 @@ namespace Players {
         private void OnCollisionEnter2D(Collision2D other) {
             // Colliding with ground
             if ((whatIsGround.value & (1 << other.transform.gameObject.layer)) > 0) {
-                print("Collision with ground");
+                // print("Collision with ground");
                 _player.IsJumping = false;
                 _player.SetIsGrounded(true);
             }

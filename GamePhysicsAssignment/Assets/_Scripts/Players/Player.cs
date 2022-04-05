@@ -11,6 +11,12 @@ namespace Players {
         // Components/Game Objects
         private PlayerAnimationManager _animationManager;
         private GameUIController _gameUIController;
+
+        [SerializeField] private Transform groundCheck;
+        [SerializeField] private LayerMask whatIsGround;
+        [SerializeField] private bool onGround = true;
+        [SerializeField] private float onGroundCheckRadius = 2f;
+        
         
         [SerializeField] private Transform hitPoint;
         [SerializeField] private LayerMask interactablesLayer;
@@ -71,6 +77,7 @@ namespace Players {
             if (isDead) return;
             
             GetInput();
+            CheckOnGround();
 
             if (_hitCoolDownTimer) {
                 _hitCoolDown -= Time.deltaTime;
@@ -82,13 +89,19 @@ namespace Players {
             }
         }
 
+        // Handles all player movement & animation changes.
         private void FixedUpdate() {
             if (isDead || _lives <= 0) return;
             
             _canSpawnBall = _currentBall == null; 
+            
             if (!isFlattened) {
-                Move(_directionX);
-
+                if (onGround)
+                    Move(_directionX);
+                else 
+                    if (_directionX != 0) Move(_directionX); // To make the surface effector on the convayer belt work
+                
+                
                 if (IsGrounded && !_isHitting)
                     _animationManager.ChangeAnimationState(_directionX != 0 ? State.PlayerRunning : State.PlayerIdle);
 
@@ -132,27 +145,36 @@ namespace Players {
             }
         }
 
+        /// <summary>
+        /// Handles all keyboard/mouse input from the player.
+        /// </summary>
         private void GetInput() {
             _directionX = Input.GetAxis("Horizontal");
 
             if (Input.GetButtonDown("Jump"))
                 _isJumpPressed = true;
 
+            // Left Mouse - Makes the player hit.
             if (Input.GetMouseButton(0))
                 _isHitPressed = true;
 
+            // Q - Spawns the ball.
             if (Input.GetKeyDown(KeyCode.Q))
                 _spawnBallPressed = true;
-
+            
+            // E - Destroys the ball if it is spawned and returns it to the players inventory.
             if (Input.GetKeyDown(KeyCode.E))
                 _destroyBallPressed = true;
         }
 
+        /// <summary>
+        /// Checks if the player has hit anything whenever hit has been pressed. 
+        /// </summary>
         private void CheckHit() {
             var hit = Physics2D.OverlapCircleAll(hitPoint.position, hitRange, interactablesLayer);
             foreach (var obj in hit) {
                 if (obj.GetComponent<TurnableSlant>()) {
-                    obj.GetComponent<TurnableSlant>().Hit();
+                    obj.GetComponent<TurnableSlant>().Hit(true);
                 }
 
                 if (obj.GetComponent<Switch>()) {
@@ -165,6 +187,20 @@ namespace Players {
             }
         }
 
+        /// <summary>
+        /// Checks whether the player is currently standing on ground or not and keeps the onGround variable updated.
+        /// Used so the surface effector on the convayer belts effects the player's rb.
+        /// </summary>
+        private void CheckOnGround() {
+            var colliders = Physics2D.OverlapCircleAll(groundCheck.position, onGroundCheckRadius, whatIsGround);
+            onGround = colliders.Length != 0;
+        }
+
+        /// <summary>
+        /// Overridden method from Character base class.
+        /// Deals damage to the player and kills the player once all lives have been lost.
+        /// </summary>
+        /// <param name="damage">The amount of damage to deal.</param>
         public override void TakeDamage(int damage) {
             if (isFlattened || isDead || _lives <= 0) return;
             
@@ -184,6 +220,9 @@ namespace Players {
             }
         }
 
+        /// <summary>
+        /// Resets the player after they have respawned.
+        /// </summary>
         private void ResetPlayer() {
             transform.position = _respawnPoint;
             isFlattened = false;
@@ -194,21 +233,36 @@ namespace Players {
             hasIncreasedJump = false;
         }
         
+        /// <summary>
+        /// Drawing radius' for the hitPoint & groundCheck. 
+        /// </summary>
         private void OnDrawGizmosSelected() {
             if (hitPoint == null) return;
             Gizmos.DrawWireSphere(hitPoint.position, hitRange);
+
+            if (groundCheck == null) return;
+            Gizmos.DrawWireSphere(groundCheck.position, onGroundCheckRadius);
         }
         
+        /// <summary>
+        /// Property for isJumping.
+        /// </summary>
         public bool IsJumping {
             get => _isJumping;
             set => _isJumping = value;
         }
 
+        /// <summary>
+        /// Property for lives.
+        /// </summary>
         public int Lives {
             get => _lives;
             set => _lives = value;
         }
 
+        /// <summary>
+        /// Property for canSpawnBall.
+        /// </summary>
         public bool CanSpawnBall {
             get => _canSpawnBall;
         }

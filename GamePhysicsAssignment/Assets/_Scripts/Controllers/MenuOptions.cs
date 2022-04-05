@@ -5,21 +5,8 @@ using UnityEngine.SceneManagement;
 
 namespace Controllers {
     public class MenuOptions : MonoBehaviour {
-
-        public void StartGame() {
-            SceneManager.LoadScene("Factory");
-            print("Start Pressed");
-        }
-
-        public void Restart() {
-            SceneManager.LoadScene("Factory");
-            print("Reset Pressed");
-        }
-        
-        public void Quit() {
-            Application.Quit();
-            print("Quit Pressed");
-        }
-
+        public void StartGame() { SceneManager.LoadScene("Factory"); }
+        public void Restart() { SceneManager.LoadScene("Factory"); }
+        public void Quit() { Application.Quit(); }
     }
 }

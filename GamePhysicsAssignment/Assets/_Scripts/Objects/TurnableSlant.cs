@@ -22,10 +22,12 @@ namespace Objects {
 
         private void Update() { }
 
-        public void Hit() {
+        public void Hit(bool rotate = false) {
             _spriteRenderer.sprite = redSlantSprite;
             Invoke(nameof(ResetSprite), 0.2f);
-            Rotate();
+            
+            if (rotate)
+                Rotate();
         }
 
         private void Rotate() {
