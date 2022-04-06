@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
 using Controllers;
 using Objects;
-using Unity.Mathematics;
 using UnityEngine;
 
 namespace Players {
@@ -27,10 +24,10 @@ namespace Players {
         [Space]
 
         // Bool Flags
-        private bool isIdle = true;
-        private bool isRunning = false;
+        private bool _isIdle = true;
+        private bool _isRunning = false;
         
-        private bool isFlattened = false;
+        private bool _isFlattened = false;
 
         private bool _isJumpPressed = false;
         private bool _isJumping = false;
@@ -43,6 +40,8 @@ namespace Players {
         private bool _canSpawnBall = false;
         private bool _spawnBallPressed = false;
         private bool _destroyBallPressed = false;
+
+        private bool _hasCrystal = false;
 
         // Upgrades
         [SerializeField] private bool hasIncreasedJump = false;
@@ -62,6 +61,7 @@ namespace Players {
 
         private Vector3 _respawnPoint;
 
+        // Initialization
         private new void Start() {
             base.Start();
             _animationManager = GetComponent<PlayerAnimationManager>();
@@ -95,7 +95,7 @@ namespace Players {
             
             _canSpawnBall = _currentBall == null; 
             
-            if (!isFlattened) {
+            if (!_isFlattened) {
                 if (onGround)
                     Move(_directionX);
                 else 
@@ -202,11 +202,11 @@ namespace Players {
         /// </summary>
         /// <param name="damage">The amount of damage to deal.</param>
         public override void TakeDamage(int damage) {
-            if (isFlattened || isDead || _lives <= 0) return;
+            if (_isFlattened || isDead || _lives <= 0) return;
             
             currentHealth -= damage;
             if (currentHealth <= damage) {
-                isFlattened = true;
+                _isFlattened = true;
                 _lives--;
                 if (_lives >= 1) {
                     Invoke(nameof(ResetPlayer), 1f);
@@ -225,9 +225,9 @@ namespace Players {
         /// </summary>
         private void ResetPlayer() {
             transform.position = _respawnPoint;
-            isFlattened = false;
-            isIdle = true;
-            isRunning = false;
+            _isFlattened = false;
+            _isIdle = true;
+            _isRunning = false;
             _isJumping = false;
             _isHitting = false;
             hasIncreasedJump = false;
@@ -245,7 +245,7 @@ namespace Players {
         }
         
         /// <summary>
-        /// Property for isJumping.
+        /// Property for _isJumping.
         /// </summary>
         public bool IsJumping {
             get => _isJumping;
@@ -253,7 +253,7 @@ namespace Players {
         }
 
         /// <summary>
-        /// Property for lives.
+        /// Property for _lives.
         /// </summary>
         public int Lives {
             get => _lives;
@@ -261,10 +261,23 @@ namespace Players {
         }
 
         /// <summary>
-        /// Property for canSpawnBall.
+        /// Property for _canSpawnBall.
         /// </summary>
         public bool CanSpawnBall {
             get => _canSpawnBall;
         }
+
+        /// <summary>
+        /// Property for _hasCrystal.
+        /// </summary>
+        public bool HasCrystal {
+            get => _hasCrystal;
+            set => _hasCrystal = value;
+        }
+        
+        /// <summary>
+        /// Property for _respawnPoint.
+        /// </summary>
+        public Vector3 RespawnPosition { set => _respawnPoint = value; }
     }
 }

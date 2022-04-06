@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Players;
 using UnityEngine.UI;
@@ -18,6 +16,7 @@ namespace Controllers {
         [SerializeField] private Image heart2;
         [SerializeField] private Image heart3;
         [SerializeField] private GameObject ball;
+        [SerializeField] private GameObject crystal;
 
         [Space]
         
@@ -26,6 +25,7 @@ namespace Controllers {
         [SerializeField] private Sprite emptyHeart;
         [SerializeField] private Sprite ballSprite;
         
+        // Initialization
         private void Start() {
             _player = FindObjectOfType(typeof(Player)) as Player;
             gameOverUI.SetActive(false);
@@ -35,12 +35,16 @@ namespace Controllers {
         private void Update() {
             CheckPlayerLives();
             ball.SetActive(_player.CanSpawnBall);
+            crystal.SetActive(_player.HasCrystal);
 
             if (_player.Lives <= 0) {
                 SetGameOverUI();
             }
         }
 
+        /// <summary>
+        /// Checks the players lives and keeps the hearts in the HUD updated.
+        /// </summary>
         private void CheckPlayerLives() {
             switch (_player.Lives) {
                 case 3:
@@ -69,6 +73,9 @@ namespace Controllers {
             }
         }
 
+        /// <summary>
+        /// Sets the Game Over UI to active when the player has run out of lives.
+        /// </summary>
         public void SetGameOverUI() {
             gameOverUI.SetActive(true);
             gameHUD.SetActive(false);

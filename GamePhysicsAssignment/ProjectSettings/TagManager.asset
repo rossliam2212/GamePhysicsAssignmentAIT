@@ -15,6 +15,13 @@ TagManager:
   - TurretEnemy
   - Walls
   - Ground
+  - Crystal
+  - CompleteCrystal
+  - YellowEyes
+  - RedEyes
+  - OrangeFF
+  - BlueFF
+  - NewSpawnPoint
   layers:
   - Default
   - TransparentFX

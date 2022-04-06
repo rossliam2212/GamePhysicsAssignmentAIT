@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 2153520275668205403}
   - component: {fileID: 7566345337561276660}
   - component: {fileID: -6419872169500893209}
-  m_Layer: 0
+  - component: {fileID: 7856975174867905611}
+  m_Layer: 11
   m_Name: Yellow Eyes Enemy
-  m_TagString: Untagged
+  m_TagString: YellowEyes
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,7 +101,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 10
+  m_Mass: 30
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -172,12 +173,25 @@ MonoBehaviour:
   currentState: 0
   patrolPoints: []
   shootPoint: {fileID: 7519361287453874051}
-  bullet: {fileID: 377858361392712624, guid: fedf31a6137fac94583d0fdd5954f9f9, type: 3}
   aboveHeadPoint: {fileID: 3050803664879292242}
   questionMark: {fileID: 977569000521322228, guid: 9703f141b1925c6418544fe55ada9c56, type: 3}
   exclamationMark: {fileID: 3402421749530967572, guid: 765acafd959cea5428b971901992f42a, type: 3}
   moveSpeed: 1
-  shootRange: 5
+  shootRange: 6
+--- !u!114 &7856975174867905611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768956050044853361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3c516292811409478c7f5445f3ab0b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootPoint: {fileID: 7519361287453874051}
+  defaultBullet: {fileID: 377858361392712624, guid: fedf31a6137fac94583d0fdd5954f9f9, type: 3}
 --- !u!1 &2223588978151622866
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,7 +201,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7519361287453874051}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ShootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,7 +216,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2223588978151622866}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.518, y: 0.248, z: 0}
+  m_LocalPosition: {x: 0.518, y: -0.19, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5416078135413493024}
@@ -217,7 +231,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3050803664879292242}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: AboveHeadPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -232,7 +246,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3476281802993938843}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.79, z: 0}
+  m_LocalPosition: {x: 0, y: 0.88, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5416078135413493024}

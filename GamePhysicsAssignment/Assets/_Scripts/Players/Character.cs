@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Players {
@@ -96,11 +94,7 @@ namespace Players {
         /// </summary>
         protected void Kill() {
             isDead = true;
-            Invoke(nameof(DestroyObject), 0.5f);
-        }
-
-        private void DestroyObject() {
-            Destroy(gameObject);
+            Destroy(gameObject, 0.5f);
         }
 
         /// <summary>

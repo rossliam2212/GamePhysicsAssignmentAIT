@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3139743870213380561}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: AboveHeadPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 113377355242869346}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.964, z: 0}
+  m_LocalPosition: {x: 0, y: 1.009, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 50559465772220758}
@@ -44,9 +44,10 @@ GameObject:
   - component: {fileID: 3103934441295210548}
   - component: {fileID: 3257977258461110762}
   - component: {fileID: 4655995824264156568}
-  m_Layer: 0
+  - component: {fileID: 3580165197090807968}
+  m_Layer: 12
   m_Name: Red Eyes Enemy
-  m_TagString: Untagged
+  m_TagString: RedEyes
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -130,7 +131,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 10
+  m_Mass: 30
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -202,12 +203,25 @@ MonoBehaviour:
   currentState: 0
   patrolPoints: []
   shootPoint: {fileID: 1594598612178890258}
-  bullet: {fileID: 377858361392712624, guid: fedf31a6137fac94583d0fdd5954f9f9, type: 3}
   aboveHeadPoint: {fileID: 3139743870213380561}
   questionMark: {fileID: 977569000521322228, guid: 9703f141b1925c6418544fe55ada9c56, type: 3}
   exclamationMark: {fileID: 3402421749530967572, guid: 765acafd959cea5428b971901992f42a, type: 3}
   moveSpeed: 1
-  shootRange: 5
+  shootRange: 7
+--- !u!114 &3580165197090807968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888344643461599874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3c516292811409478c7f5445f3ab0b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootPoint: {fileID: 1594598612178890258}
+  defaultBullet: {fileID: 377858361392712624, guid: fedf31a6137fac94583d0fdd5954f9f9, type: 3}
 --- !u!1 &4005097561468122802
 GameObject:
   m_ObjectHideFlags: 0
@@ -217,7 +231,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1594598612178890258}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: ShootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -232,7 +246,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4005097561468122802}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.55, y: 0.336, z: 0}
+  m_LocalPosition: {x: 0.55, y: 0.064, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 50559465772220758}

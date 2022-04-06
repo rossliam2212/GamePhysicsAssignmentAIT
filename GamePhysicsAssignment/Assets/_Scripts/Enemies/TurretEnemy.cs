@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Players;
 using UnityEngine;
 
@@ -30,9 +28,20 @@ namespace Enemies {
         }
 
         private void Update() {
+            if (IsAgro) {
+                if (!ExclamationMarkSpawned) {
+                    ExclamationMarkSpawned = true;
+                    CurrentExclamationMark = Instantiate(exclamationMark, aboveHeadPoint.position, Quaternion.identity);
+                }
+            }
+            else {
+                IsAgro = false;
+                ExclamationMarkSpawned = false;
+                Destroy(CurrentExclamationMark);
+            }
+            
             // Enemy States
             switch (currentState) {
-                // case EnemyState.Idle:
                 default:
                 case EnemyState.Patrol:
                     if (IsStunned) {
@@ -49,11 +58,12 @@ namespace Enemies {
                 
                 case EnemyState.Shoot:
                     if (IsStunned) {
+                        IsAgro = false;
                         currentState = EnemyState.Stunned;
                         _stunnedCoolDownTimer = true;
                     }
                     else if (InShootRange() && InYRange()) {
-                        // IsAgro = true;
+                        IsAgro = true;
                         ChangeAnimationState(TurretEnemyIdle);
                         Flip(Player.transform.position.x > transform.position.x ? Right : Left);
                         if (!_isShooting) {
@@ -62,8 +72,10 @@ namespace Enemies {
                             _shootCoolDownTimer = true;
                         }
                     }
-                    else 
+                    else {
+                        IsAgro = false;
                         currentState = EnemyState.Patrol;
+                    }
                     break;
                 
                 case EnemyState.Stunned:

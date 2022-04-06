@@ -1,27 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Objects {
     public class TurnableSlant : MonoBehaviour {
 
         private SpriteRenderer _spriteRenderer;
+        
         private Sprite _whiteSlantSprite;
         [SerializeField] private Sprite redSlantSprite;
 
-        // Up - 1
-        // Right - 2
-        // Down - 3
-        // Left - 4
-        private int _currentDirection = 1;
 
+        // Initialization
         private void Start() {
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _whiteSlantSprite = _spriteRenderer.sprite;
         }
-
-        private void Update() { }
-
+        
+        /// <summary>
+        /// Called when either the player hits the slant or the ball bounces off the slant.
+        /// </summary>
+        /// <param name="rotate">Whether to rotate the slant or not. Rotates only when the player hits it.</param>
         public void Hit(bool rotate = false) {
             _spriteRenderer.sprite = redSlantSprite;
             Invoke(nameof(ResetSprite), 0.2f);
@@ -30,19 +27,19 @@ namespace Objects {
                 Rotate();
         }
 
+        /// <summary>
+        /// Rotates the slant by -90 degrees when the player hits it.
+        /// </summary>
         private void Rotate() {
             transform.Rotate(0f, 0f, -90);
-            
-            if (_currentDirection >= 4) _currentDirection = 1;
-            else _currentDirection++;
         }
 
+        /// <summary>
+        /// Resets the sprite of the slant back to the default.
+        /// </summary>
         private void ResetSprite() {
             _spriteRenderer.sprite = _whiteSlantSprite;
         }
 
-        public int GetDirection() {
-            return _currentDirection;
-        }
     }
 }

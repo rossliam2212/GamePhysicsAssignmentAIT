@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Enemies {
@@ -7,10 +5,11 @@ namespace Enemies {
 
         [SerializeField] private Transform shootPoint;
         [SerializeField] private GameObject defaultBullet;
-        private void Start() { }
 
-        private void Update() { }
-
+        /// <summary>
+        /// Shoots an instance of the enemy bullet in the direction they are facing.
+        /// </summary>
+        /// <param name="bullet">The bullet to shoot. The default enemy bullet will be used if no specific bullet is passed in.</param>
         public void Shoot(GameObject bullet = null) {
             if (bullet == null) {
                 Instantiate(defaultBullet, shootPoint.position, shootPoint.rotation);

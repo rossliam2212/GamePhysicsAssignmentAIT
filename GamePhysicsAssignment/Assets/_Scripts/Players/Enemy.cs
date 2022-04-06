@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using Enemies;
 using UnityEngine;
 
@@ -25,6 +23,8 @@ namespace Players {
 
         protected bool IsStunned = false;
         protected bool IsAgro = false;
+        protected bool ExclamationMarkSpawned = false;
+        protected GameObject CurrentExclamationMark;
 
         // Animation
         [SerializeField] protected string currentAnimationState;
@@ -43,9 +43,9 @@ namespace Players {
         [SerializeField] private Transform shootPoint;
         protected EnemyWeapon Weapon;
         
-        [SerializeField] private Transform aboveHeadPoint;
+        [SerializeField] protected Transform aboveHeadPoint;
         [SerializeField] private GameObject questionMark;
-        [SerializeField] private GameObject exclamationMark;
+        [SerializeField] protected GameObject exclamationMark;
 
         // Initialization
         private void Awake() {
@@ -59,8 +59,7 @@ namespace Players {
             currentState = EnemyState.Idle;
             ChangeAnimationState(currentAnimationState);
         }
-
-
+        
         /// <summary>
         /// This method blah blah 
         /// </summary>
@@ -95,7 +94,7 @@ namespace Players {
         /// Makes the enemy chase a specific target or position.
         /// </summary>
         /// <param name="target">The target/position to chase.</param>
-        protected void Chase(Vector3 target) {
+        private void Chase(Vector3 target) {
             var speed = MoveSpeed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, target, speed);
         }
