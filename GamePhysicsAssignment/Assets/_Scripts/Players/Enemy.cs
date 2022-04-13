@@ -61,7 +61,7 @@ namespace Players {
         }
         
         /// <summary>
-        /// This method blah blah 
+        /// This method makes the enemy patrol between their specific patrol points when the player is not in shooting range. 
         /// </summary>
         protected void Patrol() {
             var wayPoint = patrolPoints[_currentWayPoint];

@@ -28,6 +28,7 @@ namespace Enemies {
         }
 
         private void Update() {
+            // Spawning the exclamation mark above the enemies head when in agro range
             if (IsAgro) {
                 if (!ExclamationMarkSpawned) {
                     ExclamationMarkSpawned = true;

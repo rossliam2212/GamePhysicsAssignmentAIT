@@ -25,7 +25,6 @@ namespace Players {
 
             // Colliding with the boulder
             // Colliding with spikes
-            // Falling out of the map
             // Colliding with the Orange Force Field
             // Colliding with the Blue Force Field
             if (other.gameObject.CompareTag("Boulder") ||
@@ -39,10 +38,15 @@ namespace Players {
             Physics2D.IgnoreLayerCollision(9, 10, true);
         }
 
-        // Used in Robot Level (Level 2) to set the new spawn point after the place has passed the first area.
         private void OnTriggerEnter2D(Collider2D other) {
+            // Used in Robot Level (Level 2) to set the new spawn point after the place has passed the first area.
             if (other.gameObject.CompareTag("NewSpawnPoint")) {
                 _player.RespawnPosition = transform.position;
+            }
+            
+            // Falling out of the map
+            if (other.gameObject.CompareTag("OutOfBounds")) {
+                _player.TakeDamage(100);
             }
         }
     }
